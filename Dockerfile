@@ -7,14 +7,14 @@ RUN apt-get update && apt-get install -y apt-transport-https default-jre default
   && curl -sS https://artifacts.elastic.co/GPG-KEY-elasticsearch | apt-key add - \
   && echo "deb https://artifacts.elastic.co/packages/5.x/apt stable main" | tee -a /etc/apt/sources.list.d/elastic-5.x.list \
   && apt-get update \
-  && apt-get install -y logstash
+  && apt-get install -y logstash \
   && /usr/share/logstash/bin/logstash-plugin install logstash-output-loggly
 
 # install node
 RUN apt-get install -y software-properties-common \
     && curl -sL https://deb.nodesource.com/setup_8.x | bash - \
     && apt-get install -y nodejs \
-    && node -v
+    && node -v \
     && npm install -g pm2
 
 # Clean up APT when done.

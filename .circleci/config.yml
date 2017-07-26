@@ -2,7 +2,7 @@
 jobs:
   build_image:
     docker:
-      - image: circleci/node:8.2.1
+      - image: circleci/node:8.1.4
     steps:
       - setup_remote_docker:
           version: 17.06.0-ce
@@ -23,7 +23,7 @@ jobs:
             - /var/lib/docker
   push_image:
     docker:
-      - image: circleci/node:8.2.1
+      - image: circleci/node:8.1.4
     steps:
       - setup_remote_docker:
           version: 17.06.0-ce

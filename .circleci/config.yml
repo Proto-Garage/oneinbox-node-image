@@ -4,6 +4,7 @@ jobs:
     docker:
       - image: circleci/node:8.1.4
     steps:
+      - checkout
       - setup_remote_docker:
           version: 17.06.0-ce
       - run:

@@ -14,8 +14,7 @@ RUN apt-get update && apt-get install -y apt-transport-https default-jre default
 RUN apt-get install -y software-properties-common \
     && curl -sL https://deb.nodesource.com/setup_8.x | bash - \
     && apt-get install -y nodejs \
-    && node -v \
-    && npm install -g pm2
+    && node -v
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*

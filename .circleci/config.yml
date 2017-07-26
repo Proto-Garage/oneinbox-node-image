@@ -19,7 +19,7 @@ jobs:
             docker build .
             --tag $DOCKER_REGISTRY/node:$CIRCLE_BUILD_NUM
       - save_cache:
-          key: docker-{{ checksum "package-lock.json" }}
+          key: docker-{{ checksum ".circle-sha" }}
           paths:
             - /var/lib/docker
   push_image:

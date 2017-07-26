@@ -57,7 +57,7 @@ workflows:
   build_image:
     jobs:
       - build_image
-      - push_image
+      - push_image:
           requires:
             - build_image
           filters:

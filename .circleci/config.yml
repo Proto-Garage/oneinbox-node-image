@@ -1,0 +1,64 @@
+---
+jobs:
+  build_image:
+    docker:
+      - image: circleci/node:8.2.1
+    steps:
+      - setup_remote_docker:
+          version: 17.06.0-ce
+      - run:
+          name: save SHA to a file
+          command: echo $CIRCLE_SHA1 > .circle-sha
+      - restore_cache:
+          keys:
+            - docker-{{ checksum ".circle-sha" }}
+      - run:
+          name: build docker image
+          command: >
+            docker build .
+            --tag $DOCKER_REGISTRY/node:$CIRCLE_BUILD_NUM
+      - save_cache:
+          key: docker-{{ checksum "package-lock.json" }}
+          paths:
+            - /var/lib/docker
+  push_image:
+    docker:
+      - image: circleci/node:8.2.1
+    steps:
+      - setup_remote_docker:
+          version: 17.06.0-ce
+      - run:
+          name: save SHA to a file
+          command: echo $CIRCLE_SHA1 > .circle-sha
+      - restore_cache:
+          keys:
+            - docker-{{ checksum ".circle-sha" }}
+      - run:
+          name: login to docker registry
+          command: >
+            docker login
+            -u $DOCKER_REGISTRY_USERNAME
+            -p $DOCKER_REGISTRY_PASSWORD
+            $DOCKER_REGISTRY
+      - run:
+          name: tag latest
+          command: >
+            docker tag
+            $DOCKER_REGISTRY/node:$CIRCLE_BUILD_NUM
+            $DOCKER_REGISTRY/node:latest
+      - run:
+          name: push docker image to docker registry
+          command: docker push $DOCKER_REGISTRY/node:$CIRCLE_BUILD_NUM
+      - run:
+          name: push docker image to docker registry
+          command: docker push $DOCKER_REGISTRY/node:latest
+workflows:
+  version: 2
+  build_image:
+    jobs:
+      - build_image
+      - push_image
+          filters:
+            branches:
+              only:
+                - master

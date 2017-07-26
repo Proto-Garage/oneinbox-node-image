@@ -8,32 +8,10 @@ jobs:
       - setup_remote_docker:
           version: 17.06.0-ce
       - run:
-          name: save SHA to a file
-          command: echo $CIRCLE_SHA1 > .circle-sha
-      - restore_cache:
-          keys:
-            - docker-{{ checksum ".circle-sha" }}
-      - run:
           name: build docker image
           command: >
             docker build .
             --tag $DOCKER_REGISTRY/node:$CIRCLE_BUILD_NUM
-      - save_cache:
-          key: docker-{{ checksum ".circle-sha" }}
-          paths:
-            - /var/lib/docker
-  push_image:
-    docker:
-      - image: circleci/node:8.1.4
-    steps:
-      - setup_remote_docker:
-          version: 17.06.0-ce
-      - run:
-          name: save SHA to a file
-          command: echo $CIRCLE_SHA1 > .circle-sha
-      - restore_cache:
-          keys:
-            - docker-{{ checksum ".circle-sha" }}
       - run:
           name: login to docker registry
           command: >
@@ -57,10 +35,7 @@ workflows:
   version: 2
   build_image:
     jobs:
-      - build_image
-      - push_image:
-          requires:
-            - build_image
+      - build_image:
           filters:
             branches:
               only:

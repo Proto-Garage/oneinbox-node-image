@@ -58,6 +58,8 @@ workflows:
     jobs:
       - build_image
       - push_image
+          requires:
+            - build_image
           filters:
             branches:
               only:

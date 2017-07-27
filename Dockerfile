@@ -18,3 +18,13 @@ RUN apt-get install -y software-properties-common \
 
 # Clean up APT when done.
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+
+ENV APP_DIR=/srv/node LOG_DIR=/var/log/node
+
+RUN mkdir -p $APP_DIR
+
+RUN mkdir /etc/service/node && mkdir $LOG_DIR
+RUN echo "#!/bin/sh\ncd $APP_DIR\nexec npm start >> $LOG_DIR/app.log 2>&1\n" > /etc/service/node/run
+RUN chmod +x /etc/service/node/run
+
+RUN echo "$LOG_DIR/*log {\n  daily\n  rotate 15\n  compress\n  delaycompress\n  notifempty\n  missingok\n}\n" > /etc/logrotate.d/node

@@ -1,3 +1,3 @@
 #!/bin/sh
 
-/bin/logstash -f /etc/logstash/conf.d/node.conf
+/usr/share/logstash/bin/logstash -f /etc/logstash/conf.d/node.conf

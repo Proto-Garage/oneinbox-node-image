@@ -28,7 +28,7 @@ COPY node.run.sh /etc/service/node/run
 RUN chmod +x /etc/service/node/run
 
 COPY node.logrotate.conf /etc/logrotate.d/node
-COPY logstash.logrotate.conf /etc/logstash/conf.d/node.conf
+COPY node.logstash.conf /etc/logstash/conf.d/node.conf
 
 RUN mkdir /etc/service/logstash
 COPY logstash.run.sh /etc/service/logstash/run

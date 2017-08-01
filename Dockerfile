@@ -1,5 +1,7 @@
 FROM phusion/baseimage:0.9.22
 
+ENV DISABLE_SSH=1 DISABLE_SYSLOG=1
+
 CMD ["/sbin/my_init"]
 
 # install node

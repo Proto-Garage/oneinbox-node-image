@@ -27,4 +27,10 @@ COPY node.run.sh /etc/service/node/run
 RUN chmod +x /etc/service/node/run
 
 COPY node.logrotate.conf /etc/logrotate.d/node
+
 COPY filebeat.yml /etc/filebeat/filebeat.yml
+
+# add filebeat daemon
+RUN mkdir /etc/service/filebeat
+COPY filebeat.run.sh /etc/service/filebeat/run
+RUN chmod +x /etc/service/filebeat/run

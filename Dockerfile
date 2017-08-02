@@ -27,3 +27,4 @@ COPY node.run.sh /etc/service/node/run
 RUN chmod +x /etc/service/node/run
 
 COPY node.logrotate.conf /etc/logrotate.d/node
+COPY filebeat.yml /etc/filebeat/filebeat.yml

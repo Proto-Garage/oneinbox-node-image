@@ -10,6 +10,9 @@ RUN apt-get install -y software-properties-common \
   && apt-get install -y nodejs \
   && node -v
 
+# install dnsutils
+RUN apt-get install -y dnsutils
+
 # install filebeat
 RUN curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-5.5.1-amd64.deb && \
   dpkg -i filebeat-5.5.1-amd64.deb

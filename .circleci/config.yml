@@ -7,6 +7,7 @@ jobs:
       - checkout
       - setup_remote_docker:
           version: 17.06.0-ce
+          reusable: true
       - run:
           name: build docker image
           command: >

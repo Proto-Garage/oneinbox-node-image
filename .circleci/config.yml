@@ -2,7 +2,7 @@
 jobs:
   build_image:
     docker:
-      - image: circleci/node:8.1.4
+      - image: circleci/node:8.9.3
     steps:
       - checkout
       - setup_remote_docker:
